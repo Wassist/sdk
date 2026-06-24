@@ -21,18 +21,14 @@ export default {
 
     switch (event.event) {
       case 'message.received': {
-        const wassist = new Wassist({ apiKey: env.WASSIST_API_KEY });
+        const wassist = new Wassist({ apiKey: env.WASSIST_API_KEY, baseUrl: 'http://localhost:8050' });
 
-        //Mark as read
         await wassist.conversations.read(event.conversationId);
 
-        //Generate message here
-        const message = {
+        await wassist.conversations.messages.send(event.conversationId, {
           type: 'text',
           text: { body: `You said: ${event.message.body}` },
-        }
-
-        await wassist.conversations.messages.send(event.conversationId, message);
+        });
         break;
       }
       default:
