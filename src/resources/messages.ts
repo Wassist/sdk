@@ -6,8 +6,8 @@ import type { PageParams, PaginatedResponse, RequestOptions, UUID } from '../typ
 /**
  * Messages within a conversation. Reached via `wassist.conversations.messages`.
  *
- * Documented at https://wassist.com/api-reference/conversations/messages/list
- * and https://wassist.com/api-reference/conversations/messages/send.
+ * Documented at https://docs.wassist.app/api-reference/conversations/messages/list
+ * and https://docs.wassist.app/api-reference/conversations/messages/send.
  */
 export class MessagesResource {
   /** @internal */

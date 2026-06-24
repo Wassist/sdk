@@ -1,6 +1,6 @@
 # Wassist SDK
 
-The TypeScript client for the [Wassist API](https://wassist.com/api-reference). Build WhatsApp agents, send messages, manage templates, and verify webhooks from any modern JavaScript runtime.
+The TypeScript client for the [Wassist API](https://docs.wassist.app/api-reference). Build WhatsApp agents, send messages, manage templates, and verify webhooks from any modern JavaScript runtime.
 
 [![npm version](https://img.shields.io/npm/v/@wassist/sdk.svg)](https://www.npmjs.com/package/@wassist/sdk)
 
@@ -73,7 +73,7 @@ const wassist = new Wassist({
 | `wassist.whatsappTemplates` | `list`, `get`, `create`, `update`, `delete`, `publish`, `unpublish` |
 | `wassist.webhooks` | `constructEvent`, `constructEventAsync` |
 
-Every method is fully typed against the [public API reference](https://wassist.com/api-reference) — your editor knows every field on every input and response.
+Every method is fully typed against the [public API reference](https://docs.wassist.app/api-reference) — your editor knows every field on every input and response.
 
 ## Pagination
 
@@ -273,7 +273,7 @@ import type {
 
 ## Support
 
-- Documentation: [wassist.com/api-reference](https://wassist.com/api-reference)
+- Documentation: [docs.wassist.app/api-reference](https://docs.wassist.app/api-reference)
 - Email: [contact@wassist.app](mailto:contact@wassist.app)
 - Issues: [github.com/wassist/sdk/issues](https://github.com/wassist/sdk/issues)
 

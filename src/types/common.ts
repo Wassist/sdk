@@ -14,7 +14,7 @@ export type PhoneNumberString = string;
 /**
  * Standard offset/limit pagination parameters accepted by every list endpoint.
  *
- * @see https://wassist.com/api-reference/introduction
+ * @see https://docs.wassist.app/api-reference/introduction
  */
 export interface PageParams {
   /** Number of results to return per page. */

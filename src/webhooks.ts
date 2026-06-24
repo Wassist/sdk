@@ -2,8 +2,8 @@
  * Webhook signature verification.
  *
  * Implements the Stripe-style `t=<unix>,v1=<hex hmac sha256>` scheme
- * documented at https://wassist.com/concepts/webhooks. Compute the HMAC of
- * `<timestamp>.<raw body>` with your webhook's signing secret and compare
+ * documented at https://docs.wassist.app/concepts/webhooks. Compute the HMAC of
+ * `<timestamp>.<raw body>` with   your webhook's signing secret and compare
  * it (in constant time) to the `v1` component of `X-Wassist-Signature`.
  *
  * This module exposes two helpers:

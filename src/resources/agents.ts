@@ -11,7 +11,7 @@ import type { PageParams, PaginatedResponse, RequestOptions, UUID } from '../typ
 /**
  * Methods for managing agents — the AI personas you connect to WhatsApp.
  *
- * Documented at https://wassist.com/api-reference/agents/list.
+ * Documented at https://docs.wassist.app/api-reference/agents/list.
  */
 export class AgentsResource {
   /** @internal */
