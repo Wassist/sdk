@@ -52,6 +52,38 @@ export interface SubscriptionRevokedEvent extends WassistEventBase<'subscription
 }
 
 // =============================================================================
+// subscription.message.received
+// =============================================================================
+
+/**
+ * Fired when an inbound user message lands on a conversation whose
+ * routing has been switched to `webhook` (either at the number level via
+ * `phoneNumbers.subscribe` or at the conversation level via
+ * `conversations.subscribe`). The agent pipeline is skipped — delivery
+ * goes **only** to the assigned webhook, with no fan-out.
+ *
+ * The envelope is identical to {@link MessageReceivedEvent} with two
+ * extra fields ({@link routing} and {@link webhookId}) so you can tell
+ * subscription-routed traffic apart from the legacy broadcast event.
+ *
+ * @see https://docs.wassist.app/guides/webhooks/routing
+ */
+export interface SubscriptionMessageReceivedEvent
+  extends WassistEventBase<'subscription.message.received'> {
+  /** Your phone number that received the message. */
+  phoneNumber: PhoneNumberString;
+  /** The contact's phone number. */
+  from: PhoneNumberString;
+  contact: { name: string | null; phoneNumber: PhoneNumberString };
+  message: MessageReceivedMessage;
+  conversationId: UUID;
+  /** Always `"webhook"` for this event — included for symmetry with the lifecycle events. */
+  routing: 'webhook';
+  /** The webhook the conversation is subscribed to. */
+  webhookId: UUID;
+}
+
+// =============================================================================
 // test.ping
 // =============================================================================
 
@@ -70,8 +102,9 @@ export interface TestPingEvent extends WassistEventBase<'test.ping'> {
  *
  * ```ts
  * switch (event.event) {
- *   case 'message.received':       event.message.body;     // typed
- *   case 'subscription.activated': event.webhookId;        // typed
+ *   case 'message.received':              event.message.body;     // typed
+ *   case 'subscription.activated':        event.webhookId;        // typed
+ *   case 'subscription.message.received': event.webhookId;        // typed
  * }
  * ```
  *
@@ -81,6 +114,7 @@ export interface TestPingEvent extends WassistEventBase<'test.ping'> {
 export type WassistEvent =
   | MessageReceivedEvent
   | SubscriptionActivatedEvent
+  | SubscriptionMessageReceivedEvent
   | SubscriptionRevokedEvent
   | TestPingEvent;
 

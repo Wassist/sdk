@@ -4,4 +4,4 @@
  *
  * Updated in lockstep with `package.json`'s `version` field.
  */
-export const SDK_VERSION = '0.1.0';
+export const SDK_VERSION = '0.1.2';

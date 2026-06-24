@@ -204,6 +204,11 @@ app.post(
       case 'message.received':
         // event.message, event.from, event.conversationId, ...
         break;
+      case 'subscription.message.received':
+        // Same shape as message.received plus event.routing ('webhook')
+        // and event.webhookId. Fires for conversations routed to a webhook
+        // instead of an agent — see https://docs.wassist.app/guides/webhooks/routing
+        break;
       case 'subscription.activated':
       case 'subscription.revoked':
         // event.webhookId, event.conversationId
