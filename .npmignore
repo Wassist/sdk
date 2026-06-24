@@ -2,6 +2,7 @@ src/
 tsconfig.json
 tsup.config.ts
 .github/
+examples/
 node_modules/
 *.ts
 !dist/**

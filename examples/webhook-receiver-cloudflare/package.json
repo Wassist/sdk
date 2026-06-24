@@ -1,0 +1,19 @@
+{
+  "name": "wassist-example-webhook-receiver-cloudflare",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Verify + echo Wassist webhooks from a Cloudflare Worker, deployable in one click.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@wassist/sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240620.0",
+    "typescript": "^5",
+    "wrangler": "^3"
+  }
+}

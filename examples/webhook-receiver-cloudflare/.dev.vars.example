@@ -1,0 +1,6 @@
+# Copy to .dev.vars for `wrangler dev`. Production secrets are set with:
+#   wrangler secret put WASSIST_API_KEY
+#   wrangler secret put WASSIST_WEBHOOK_SECRET
+
+WASSIST_API_KEY=
+WASSIST_WEBHOOK_SECRET=

@@ -48,6 +48,16 @@ for await (const c of wassist.conversations.list()) {
 
 Get your API key at [wassist.app/settings](https://wassist.app/settings).
 
+## Examples
+
+Runnable, self-contained examples live in [`examples/`](https://github.com/wassist/sdk/tree/main/examples). Each one is its own mini-package — `cd` in, install, and go.
+
+| Example | What it shows | Deploy |
+|---------|---------------|--------|
+| [`quickstart-setup-agent`](https://github.com/wassist/sdk/tree/main/examples/quickstart-setup-agent) | One-shot script: create an agent, configure prompts and icebreakers, optionally connect a phone number. | — |
+| [`webhook-receiver-vercel`](https://github.com/wassist/sdk/tree/main/examples/webhook-receiver-vercel) | Next.js App Router route that verifies Wassist webhooks and echoes inbound messages. | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwassist%2Fsdk&root-directory=examples%2Fwebhook-receiver-vercel&project-name=wassist-webhook-vercel&env=WASSIST_API_KEY,WASSIST_WEBHOOK_SECRET) |
+| [`webhook-receiver-cloudflare`](https://github.com/wassist/sdk/tree/main/examples/webhook-receiver-cloudflare) | Cloudflare Worker that verifies Wassist webhooks via Web Crypto and echoes inbound messages. | [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/wassist/sdk/tree/main/examples/webhook-receiver-cloudflare&secrets=WASSIST_API_KEY,WASSIST_WEBHOOK_SECRET) |
+
 ## Configuration
 
 ```ts

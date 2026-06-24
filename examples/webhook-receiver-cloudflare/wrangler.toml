@@ -1,0 +1,11 @@
+name = "wassist-webhook-receiver"
+main = "src/worker.ts"
+compatibility_date = "2024-06-20"
+compatibility_flags = ["nodejs_compat"]
+
+# WASSIST_API_KEY and WASSIST_WEBHOOK_SECRET are provisioned as encrypted
+# secrets — never commit them. After deploy run:
+#   wrangler secret put WASSIST_API_KEY
+#   wrangler secret put WASSIST_WEBHOOK_SECRET
+# Or use the one-click Deploy to Cloudflare button (see README) which prompts
+# for both values during setup.
