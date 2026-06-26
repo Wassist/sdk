@@ -79,6 +79,36 @@ export interface QuickReplyMessage {
 }
 
 // =============================================================================
+// Tool executions
+// =============================================================================
+
+/**
+ * Origin of a tool execution. Mirrors the backend `ToolExecutionType`
+ * choices.
+ */
+export type ToolExecutionType =
+  | 'api'
+  | 'webhook'
+  | 'mcp'
+  | 'content_generation'
+  | 'built_in';
+
+/**
+ * A single tool call the agent ran while producing a message. The
+ * payloads in `args` / `result` are tool-specific.
+ */
+export interface SessionToolExecution {
+  id: UUID;
+  toolName: string;
+  toolType: ToolExecutionType;
+  args: Record<string, unknown>;
+  result: Record<string, unknown>;
+  error: string;
+  durationMs: number | null;
+  createdAt: ISODateTime;
+}
+
+// =============================================================================
 // Message envelope
 // =============================================================================
 
@@ -102,6 +132,17 @@ export interface Message {
   template: TemplateMessage | null;
   unified: UnifiedMessage | null;
   quickReply: QuickReplyMessage | null;
+
+  /**
+   * Tool executions the agent ran while producing this message. Empty
+   * for user / system messages and assistant messages that didn't invoke
+   * any tools. Includes API, webhook, MCP, content-generation and
+   * built-in tool calls.
+   *
+   * Optional for forward compatibility with older API responses that
+   * pre-date this field; new responses always include an array.
+   */
+  toolExecutions?: SessionToolExecution[];
 }
 
 // =============================================================================
