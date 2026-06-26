@@ -6,7 +6,7 @@ export type MessageRole = 'user' | 'assistant' | 'system';
 export type MessageType =
   | 'text'
   | 'image'
-  | 'cta_button'
+  | 'cta'
   | 'list_selection'
   | 'template'
   | 'unified'
@@ -114,7 +114,7 @@ export interface SessionToolExecution {
 
 /**
  * A single message in a conversation. Exactly one of `text`, `image`,
- * `ctaButton`, `listSelection`, `template`, `unified`, or `quickReply` will
+ * `cta`, `listSelection`, `template`, `unified`, or `quickReply` will
  * be populated based on `type`.
  */
 export interface Message {

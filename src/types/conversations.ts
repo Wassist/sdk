@@ -10,7 +10,7 @@ export interface ConversationContact {
 export interface ConversationLastMessage {
   /**
    * Discriminator for the original message (e.g. `text`, `image`,
-   * `cta_button`, `template`). Useful for showing a type-aware icon
+   * `cta`, `template`). Useful for showing a type-aware icon
    * alongside the preview text in list views.
    */
   type: string;
