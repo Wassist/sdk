@@ -21,6 +21,27 @@ export interface ConversationLastMessage {
 }
 
 /**
+ * Identity block for the contact's active Shopify Customer Account login.
+ * Present only when the contact is signed in to at least one Shopify store
+ * (via the Customer Account OAuth flow). Never exposes tokens.
+ */
+export interface ConversationShopifyCustomer {
+  /** Customer email (may be missing on very old logins). */
+  email: string | null;
+  /**
+   * Shopify Customer GID (e.g. `gid://shopify/Customer/123456`). May be
+   * `null` if the identity query failed at callback.
+   */
+  shopifyCustomerId: string | null;
+  /** Store display name (falls back to the myshopify domain). */
+  storeName: string;
+  /** Fully-qualified myshopify.com domain. */
+  shopDomain: string;
+  /** When this login row was created. */
+  loggedInAt: ISODateTime;
+}
+
+/**
  * A Wassist conversation between one of your phone numbers and a contact.
  */
 export interface Conversation {
@@ -51,6 +72,11 @@ export interface Conversation {
    * rather than inheriting from the phone number's default routing.
    */
   routingOverride: boolean;
+  /**
+   * Identity for the contact's active Shopify Customer Account login,
+   * or `null` if the contact is not signed in to any Shopify store.
+   */
+  shopifyCustomer: ConversationShopifyCustomer | null;
 }
 
 /**
