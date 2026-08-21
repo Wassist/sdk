@@ -154,12 +154,13 @@ export interface SendMessageTemplateInput {
   /** Approved WhatsApp template name. */
   name: string;
   /**
-   * Variable values, keyed by component. Each list is positional and
-   * matches the placeholder order in the approved template.
+   * Variable values, keyed by component. For a positional template ({{1}},
+   * {{2}}) pass a list matching the placeholder order; for a named template
+   * ({{customer_name}}) pass an object keyed by variable name.
    */
   variables?: {
-    body?: string[];
-    header?: string[];
+    body?: string[] | Record<string, string>;
+    header?: string[] | Record<string, string>;
     buttons?: string[];
   };
 }
