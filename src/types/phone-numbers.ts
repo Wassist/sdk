@@ -90,8 +90,8 @@ export interface SubscribePhoneNumberInput {
  * Input for `POST /phone-numbers/{number}/connect-agent/`.
  *
  * Sets `defaultRouting='agent'` and assigns the given agent. Any webhook
- * subscribed to the number is dropped. The agent must already be owned by
- * or shared with the caller.
+ * subscribed to the number is dropped. The agent must belong to the caller's
+ * organisation.
  */
 export interface ConnectAgentInput {
   /** Agent to connect to this number. */

@@ -17,10 +17,11 @@ export interface ImageInfo extends FileInfo {
   height: number;
 }
 
-/** Minimal user descriptor returned on agent owner/sharings fields. */
-export interface PublicUser {
-  phoneNumber: string;
-  whatsappName: string | null;
+/** Minimal descriptor of the organisation an agent belongs to. */
+export interface AgentOrganization {
+  id: UUID;
+  name: string;
+  isPersonal: boolean;
 }
 
 // =============================================================================
@@ -99,14 +100,15 @@ export interface AgentMcpConfig {
   toolWhitelist: string[];
 }
 
+export type PaywallAction = 'none' | 'purchase_link' | 'terminal';
+
 export interface AgentPaywallConfig {
   id: UUID;
   messageLimit: number | null;
-  paywallAction: 'none' | 'purchase_link' | 'subscribe' | 'terminal';
+  paywallAction: PaywallAction;
   paywallUrl: string | null;
   ctaButtonText: string;
   terminalStateMessage: string;
-  subscriptionPricePerMonth: number | null;
 }
 
 export interface AgentCreditSettings {
@@ -159,14 +161,13 @@ export interface Agent {
   creditSettings: AgentCreditSettings | null;
 
   // Metadata
-  owner: PublicUser | null;
-  sharings: PublicUser[];
+  /** The organisation that owns this agent. */
+  organization: AgentOrganization | null;
   phoneNumbers: AgentWhatsAppPhoneNumber[];
   totalMessages: number;
   totalSessions: number;
-  /** Shareable URL that connects this agent to a new contact via WhatsApp. */
+  /** Public URL that connects this agent to a new contact via WhatsApp. */
   connectUrl: string;
-  ownerActive: boolean;
 
   createdAt: ISODateTime;
 }
@@ -277,11 +278,10 @@ export interface AgentMcpConfigInput {
 
 export interface AgentPaywallConfigInput {
   messageLimit?: number | null;
-  paywallAction?: 'none' | 'purchase_link' | 'subscribe' | 'terminal';
+  paywallAction?: PaywallAction;
   paywallUrl?: string | null;
   ctaButtonText?: string;
   terminalStateMessage?: string;
-  subscriptionPricePerMonth?: number | null;
 }
 
 export interface AgentCreditSettingsInput {

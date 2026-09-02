@@ -81,8 +81,7 @@ export class PhoneNumbersResource {
    * Assign an agent as the default for this number. Drops any subscribed
    * webhook.
    *
-   * The agent must already be owned by or shared with the authenticated
-   * user.
+   * The agent must belong to the authenticated organisation.
    *
    * `POST /phone-numbers/{number}/connect-agent/`
    */
