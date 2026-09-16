@@ -91,7 +91,9 @@ export type ToolExecutionType =
   | 'webhook'
   | 'mcp'
   | 'content_generation'
-  | 'built_in';
+  | 'built_in'
+  | 'shopify'
+  | 'web_search';
 
 /**
  * A single tool call the agent ran while producing a message. The
