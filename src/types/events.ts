@@ -1,4 +1,5 @@
 import type { UUID, ISODateTime, PhoneNumberString } from './common';
+import type { MessageReferral } from './messages';
 
 /**
  * The base shape every webhook event shares.
@@ -21,6 +22,8 @@ export interface MessageReceivedMessage {
   body: string;
   media: { url: string; mimeType: string }[];
   buttons: { type: 'url' | 'quick_reply'; text: string; url?: string; quickReplyId?: string }[];
+  /** Click-to-WhatsApp ad referral, when the customer messaged from an ad. */
+  referral?: MessageReferral | null;
 }
 
 export interface MessageReceivedEvent extends WassistEventBase<'message.received'> {
@@ -31,6 +34,8 @@ export interface MessageReceivedEvent extends WassistEventBase<'message.received
   contact: { name: string | null; phoneNumber: PhoneNumberString };
   message: MessageReceivedMessage;
   conversationId: UUID;
+  /** The conversation's most recent Click-to-WhatsApp ad referral, if any. */
+  latestReferral?: MessageReferral | null;
 }
 
 // =============================================================================
@@ -77,6 +82,8 @@ export interface SubscriptionMessageReceivedEvent
   contact: { name: string | null; phoneNumber: PhoneNumberString };
   message: MessageReceivedMessage;
   conversationId: UUID;
+  /** The conversation's most recent Click-to-WhatsApp ad referral, if any. */
+  latestReferral?: MessageReferral | null;
   /** Always `"webhook"` for this event — included for symmetry with the lifecycle events. */
   routing: 'webhook';
   /** The webhook the conversation is subscribed to. */

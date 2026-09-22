@@ -1,5 +1,5 @@
 import type { UUID, ISODateTime } from './common';
-import type { MessageRole, SendMessageTemplateInput } from './messages';
+import type { MessageReferral, MessageRole, SendMessageTemplateInput } from './messages';
 import type { PhoneNumberRoutingMode } from './phone-numbers';
 
 export interface ConversationContact {
@@ -77,6 +77,11 @@ export interface Conversation {
    * or `null` if the contact is not signed in to any Shopify store.
    */
   shopifyCustomer: ConversationShopifyCustomer | null;
+  /**
+   * Most recent Click-to-WhatsApp ad referral in this conversation, or
+   * `null` if the customer never messaged from an ad.
+   */
+  latestReferral?: MessageReferral | null;
 }
 
 /**
@@ -97,6 +102,12 @@ export interface ListConversationsParams {
   lastMessageAfter?: ISODateTime;
   /** ISO datetime — only return conversations with messages before this time. */
   lastMessageBefore?: ISODateTime;
+  /** `true` = only conversations that received a Click-to-WhatsApp ad referral, `false` = only those that didn't. */
+  hasReferral?: boolean;
+  /** Only conversations with a referral from this Meta ad/post ID. */
+  referralSourceId?: string;
+  /** Only conversations with a referral carrying this Click-to-WhatsApp click ID. */
+  ctwaClid?: string;
   ordering?:
     | 'last_message_time'
     | '-last_message_time'

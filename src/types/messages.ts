@@ -111,6 +111,41 @@ export interface SessionToolExecution {
 }
 
 // =============================================================================
+// Click-to-WhatsApp referral
+// =============================================================================
+
+/**
+ * WhatsApp's `referral` object for an inbound message the customer sent
+ * after tapping a Click-to-WhatsApp ad (or boosted post).
+ */
+export interface MessageReferral {
+  /** The inbound message this referral arrived on. */
+  messageId: UUID;
+  /** `ad` or `post`. */
+  sourceType: string | null;
+  /** Meta ad or post ID. */
+  sourceId: string | null;
+  /** URL of the ad or post the customer tapped. */
+  sourceUrl: string | null;
+  headline: string | null;
+  body: string | null;
+  /** `image` or `video`. */
+  mediaType: string | null;
+  imageUrl: string | null;
+  videoUrl: string | null;
+  thumbnailUrl: string | null;
+  /**
+   * Click-to-WhatsApp click ID. Send it back to Meta via the Conversions
+   * API to attribute downstream events (leads, purchases) to the ad.
+   */
+  ctwaClid: string | null;
+  /** The ad's pre-filled welcome message, when WhatsApp includes it. */
+  welcomeMessage: string | null;
+  /** When the customer sent the referred message. */
+  createdAt: ISODateTime;
+}
+
+// =============================================================================
 // Message envelope
 // =============================================================================
 
@@ -145,6 +180,12 @@ export interface Message {
    * pre-date this field; new responses always include an array.
    */
   toolExecutions?: SessionToolExecution[];
+
+  /**
+   * Set on inbound messages the customer sent from a Click-to-WhatsApp
+   * ad; `null` otherwise.
+   */
+  referral?: MessageReferral | null;
 }
 
 // =============================================================================
