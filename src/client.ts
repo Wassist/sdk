@@ -2,6 +2,8 @@ import { HttpClient, type WassistClientConfig } from './http';
 import { AgentsResource } from './resources/agents';
 import { ConversationsResource } from './resources/conversations';
 import { PhoneNumbersResource } from './resources/phone-numbers';
+import { SessionsResource } from './resources/sessions';
+import { SimulationsResource } from './resources/simulations';
 import { WhatsAppAccountsResource } from './resources/whatsapp-accounts';
 import { WhatsAppLinkSessionsResource } from './resources/whatsapp-link-sessions';
 import { WhatsAppTemplatesResource } from './resources/whatsapp-templates';
@@ -36,6 +38,10 @@ export class Wassist {
   readonly whatsappLinkSessions: WhatsAppLinkSessionsResource;
   /** Manage WhatsApp message templates. */
   readonly whatsappTemplates: WhatsAppTemplatesResource;
+  /** Agent sessions and the channel each one is talking on. */
+  readonly sessions: SessionsResource;
+  /** Dashboard test chats with an agent. */
+  readonly simulations: SimulationsResource;
   /** Verify inbound webhook signatures. */
   readonly webhooks: Webhooks = webhooksSingleton;
 
@@ -57,5 +63,7 @@ export class Wassist {
     this.whatsappAccounts = new WhatsAppAccountsResource(http);
     this.whatsappLinkSessions = new WhatsAppLinkSessionsResource(http);
     this.whatsappTemplates = new WhatsAppTemplatesResource(http);
+    this.sessions = new SessionsResource(http);
+    this.simulations = new SimulationsResource(http);
   }
 }

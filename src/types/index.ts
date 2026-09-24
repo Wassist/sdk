@@ -6,4 +6,5 @@ export * from './phone-numbers';
 export * from './whatsapp-accounts';
 export * from './whatsapp-link-sessions';
 export * from './whatsapp-templates';
+export * from './sessions';
 export * from './events';

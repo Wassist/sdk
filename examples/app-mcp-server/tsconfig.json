@@ -2,21 +2,15 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "lib": ["ES2022"],
-    "types": ["@cloudflare/workers-types"],
+    "moduleResolution": "Bundler",
     "strict": true,
-    "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "paths": {
       "@wassist/sdk": ["../../src/index.ts"],
       "@wassist/sdk/apps": ["../../src/apps.ts"]
     }
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src"]
 }

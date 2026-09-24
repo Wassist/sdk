@@ -23,13 +23,27 @@
  */
 
 export { Wassist } from './client';
-export type { WassistClientConfig, FetchLike } from './http';
+export type { WassistClientConfig, FetchLike, AppCredentials } from './http';
 
 // Pagination
 export { AutoPaginatedList, type Page } from './pagination';
 
 // Webhook helpers
 export { Webhooks } from './webhooks';
+
+// App helpers (also importable from '@wassist/sdk/apps')
+export {
+  WassistApp,
+  WhatsAppChannel,
+  WebBuilderChannel,
+  WASSIST_META_PREFIX,
+  CONTEXT_TOKEN_META_KEY,
+  type WassistAppConfig,
+  type WassistToolContext,
+  type WassistChannel,
+  type SetupRedirect,
+  type InstallRedirect,
+} from './apps';
 
 // Resource classes — exported for type-only use (e.g. dependency injection)
 export { AgentsResource } from './resources/agents';
@@ -39,6 +53,8 @@ export { PhoneNumbersResource } from './resources/phone-numbers';
 export { WhatsAppAccountsResource } from './resources/whatsapp-accounts';
 export { WhatsAppLinkSessionsResource } from './resources/whatsapp-link-sessions';
 export { WhatsAppTemplatesResource } from './resources/whatsapp-templates';
+export { SessionsResource } from './resources/sessions';
+export { SimulationsResource } from './resources/simulations';
 
 // Errors
 export {

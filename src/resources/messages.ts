@@ -25,7 +25,14 @@ export class MessagesResource {
   ): AutoPaginatedList<Message> {
     const path = `/conversations/${encodeURIComponent(conversationId)}/messages/`;
     return new AutoPaginatedList<Message>(
-      (p) => this.http.get<PaginatedResponse<Message>>(path, { query: p, options }),
+      async (p) => {
+        // The endpoint returns a bare array of up to `limit` messages rather
+        // than the usual envelope.
+        const res = await this.http.get<PaginatedResponse<Message> | Message[]>(path, { query: p, options });
+        if (!Array.isArray(res)) return res;
+        const full = p.limit !== undefined && res.length >= p.limit;
+        return { count: (p.offset ?? 0) + res.length, next: full ? 'more' : null, previous: null, results: res };
+      },
       params,
       options
     );

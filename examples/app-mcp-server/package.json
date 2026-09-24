@@ -1,0 +1,23 @@
+{
+  "name": "wassist-example-app-mcp-server",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A Wassist App: an MCP server that reads Wassist context from _meta.",
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file=.env src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "@wassist/sdk": "^0.3.0",
+    "express": "^4.21.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}

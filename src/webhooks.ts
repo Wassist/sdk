@@ -117,7 +117,7 @@ export class Webhooks {
    * Web Crypto variant of {@link signSync}.
    */
   async signAsync(signedPayload: string, secret: string): Promise<string> {
-    const subtle = globalThis.crypto?.subtle;
+    const subtle = (globalThis as { crypto?: Crypto }).crypto?.subtle;
     if (!subtle) {
       throw new WassistSignatureVerificationError({
         message:
@@ -266,10 +266,14 @@ let cachedNodeCrypto: NodeCrypto | null | undefined;
  * `__sdkRequire` is injected by the tsup banner — see `tsup.config.ts`.
  * In ESM it's a `createRequire(import.meta.url)`; in CJS it's the
  * ambient `require`. Both can resolve `node:crypto` synchronously.
+ * It's absent when the source runs unbundled, where
+ * `process.getBuiltinModule` (Node 20.16+) covers the same need.
  *
  * @internal
  */
 declare const __sdkRequire: ((id: string) => unknown) | undefined;
+
+type ModuleLoader = (id: string) => unknown;
 
 /**
  * Lazily load `node:crypto` without forcing it into the dep graph for
@@ -282,10 +286,13 @@ declare const __sdkRequire: ((id: string) => unknown) | undefined;
 function loadNodeCrypto(): NodeCrypto | undefined {
   if (cachedNodeCrypto !== undefined) return cachedNodeCrypto ?? undefined;
   try {
-    const req: ((id: string) => unknown) | undefined =
-      typeof __sdkRequire === 'function'
-        ? __sdkRequire
-        : (globalThis as { require?: (id: string) => unknown }).require;
+    const g = globalThis as {
+      process?: { getBuiltinModule?: ModuleLoader };
+      require?: ModuleLoader;
+    };
+    const getBuiltinModule = g.process?.getBuiltinModule?.bind(g.process);
+    const req: ModuleLoader | undefined =
+      typeof __sdkRequire === 'function' ? __sdkRequire : (getBuiltinModule ?? g.require);
     cachedNodeCrypto = (req?.('node:crypto') as NodeCrypto | undefined) ?? null;
   } catch {
     cachedNodeCrypto = null;

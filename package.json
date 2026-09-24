@@ -1,6 +1,6 @@
 {
   "name": "@wassist/sdk",
-  "version": "0.1.2",
+  "version": "0.3.0",
   "description": "Wassist SDK – the TypeScript client for the Wassist API",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -11,6 +11,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./apps": {
+      "types": "./dist/apps.d.ts",
+      "import": "./dist/apps.js",
+      "require": "./dist/apps.cjs"
     },
     "./package.json": "./package.json"
   },

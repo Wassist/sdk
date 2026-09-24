@@ -73,7 +73,7 @@ npm run deploy
 
 - The Worker uses `constructEventAsync`, which runs on `globalThis.crypto.subtle` — no `node:crypto`, no `nodejs_compat` bundle bloat needed for verification itself.
 - The body is read **once** with `request.text()` and passed unchanged to verification. Don't `JSON.parse` it first — even whitespace differences break the HMAC.
-- During SDK development you can swap the dependency to `"file:../.."` and re-run `npm install` to pull from the monorepo workspace instead of npm.
+- Inside the SDK repo, `tsconfig.json` maps `@wassist/sdk` to the SDK source in `../../src`, so the Worker bundles the code you're working on. Outside it, the npm package is used.
 
 ## License
 

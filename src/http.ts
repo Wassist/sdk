@@ -28,14 +28,29 @@ import { SDK_VERSION } from './version';
 export type FetchLike = (input: string, init?: RequestInit) => Promise<Response>;
 
 /**
- * Configuration for {@link Wassist}.
+ * A Wassist App acting for one of the organisations that installed it.
+ */
+export interface AppCredentials {
+  clientId: string;
+  clientSecret: string;
+  /** The installation (one per organisation) the requests act for. */
+  installationId: string;
+}
+
+/**
+ * Configuration for {@link Wassist}. Pass either `apiKey` or `appCredentials`.
  */
 export interface WassistClientConfig {
   /**
    * Your Wassist API key. Find it at
    * https://wassist.app/settings → API Keys.
    */
-  apiKey: string;
+  apiKey?: string;
+  /**
+   * Authenticate as a Wassist App instead of with an API key. Usually built
+   * for you by `WassistApp.client(installationId)`.
+   */
+  appCredentials?: AppCredentials;
   /**
    * Base URL of the Wassist API.
    *
@@ -89,20 +104,27 @@ interface RequestArgs {
  * @internal
  */
 export class HttpClient {
-  private readonly apiKey: string;
+  private readonly authHeaders: Record<string, string>;
   private readonly baseUrl: string;
   private readonly timeout: number;
   private readonly maxRetries: number;
   private readonly fetchImpl: FetchLike;
 
   constructor(config: WassistClientConfig) {
-    if (!config.apiKey) {
+    if (config.appCredentials) {
+      const { clientId, clientSecret, installationId } = config.appCredentials;
+      this.authHeaders = {
+        Authorization: `Basic ${base64Encode(`${clientId}:${clientSecret}`)}`,
+        'X-Wassist-Installation': installationId,
+      };
+    } else if (config.apiKey) {
+      this.authHeaders = { 'X-API-Key': config.apiKey };
+    } else {
       throw new WassistError({
         message:
           'A Wassist `apiKey` is required. Create one at https://wassist.app/settings.',
       });
     }
-    this.apiKey = config.apiKey;
     this.baseUrl = (config.baseUrl ?? DEFAULT_BASE_URL).replace(/\/+$/, '');
     this.timeout = config.timeout ?? DEFAULT_TIMEOUT_MS;
     this.maxRetries = config.maxRetries ?? DEFAULT_MAX_RETRIES;
@@ -224,7 +246,7 @@ export class HttpClient {
 
   private buildHeaders(args: RequestArgs): Record<string, string> {
     const headers: Record<string, string> = {
-      'X-API-Key': this.apiKey,
+      ...this.authHeaders,
       'Accept': 'application/json',
       'User-Agent': `wassist-sdk-node/${SDK_VERSION}`,
       'X-Wassist-Client': `wassist-sdk-node/${SDK_VERSION}`,
@@ -271,6 +293,13 @@ export class HttpClient {
 // =============================================================================
 // Helpers
 // =============================================================================
+
+function base64Encode(value: string): string {
+  const bytes = new TextEncoder().encode(value);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i] ?? 0);
+  return btoa(binary);
+}
 
 function safeJson(response: Response): Promise<unknown> {
   return response
